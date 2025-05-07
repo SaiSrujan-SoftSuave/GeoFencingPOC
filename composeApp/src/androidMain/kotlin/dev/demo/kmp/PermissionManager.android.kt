@@ -6,12 +6,14 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import org.koin.core.context.GlobalContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-actual class PermissionManager(
-    private val context: Context,
-) {
+actual class PermissionManager {
+    private val context: Context =
+        GlobalContext.get().get<Context>()
+
     actual suspend fun requestLocationPermission(): Boolean {
         return suspendCoroutine { continuation ->
             val activity = context as? Activity

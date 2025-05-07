@@ -18,10 +18,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
-
+    val mainViewModel = koinViewModel<MainViewModel>()
     val currentLocation by remember {
         mutableStateOf("")
     }
@@ -40,21 +41,22 @@ fun MainScreen(modifier: Modifier = Modifier) {
         ) {
             Button(
                 onClick = {
-                    println("")
+                    mainViewModel.requestLocationPermission()
+                    println("asked the permission")
                 }
-            ){
+            ) {
                 Text("Start Tracking")
             }
             Button(
                 onClick = {
                     println("")
                 }
-            ){
+            ) {
                 Text("Stop Tracking")
             }
             Column {
                 Text(currentLocation)
-                Text("Current Location", style = MaterialTheme.typography.subtitle1)
+                Text("Current Location ${mainViewModel.permissionStatus}", style = MaterialTheme.typography.subtitle1)
             }
             Column {
                 Text("Fences Distance $sliderValue")
@@ -69,10 +71,4 @@ fun MainScreen(modifier: Modifier = Modifier) {
             }
         }
     }
-}
-
-@Composable
-@Preview
-fun MainScreenPreview() {
-    MainScreen()
 }
