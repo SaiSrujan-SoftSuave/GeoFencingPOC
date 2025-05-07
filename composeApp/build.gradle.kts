@@ -52,6 +52,11 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
         }
+        nativeMain.dependencies {
+            implementation(libs.koin.core)
+//            implementation(libs.koin.core.logger)
+//            implementation(libs.koin.core.time)
+        }
     }
 }
 
